@@ -1,0 +1,28 @@
+org: orange472
+app: serverless-bolt-js
+service: serverless-bolt-js
+frameworkVersion: "3"
+provider:
+  name: aws
+  runtime: nodejs14.x
+  environment:
+    SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
+    SLACK_CLIENT_ID: ${env:SLACK_CLIENT_ID}
+    SLACK_CLIENT_SECRET: ${env:SLACK_CLIENT_SECRET}
+    SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
+    GOOGLE_APPLICATION_CREDENTIALS: ${env:GOOGLE_APPLICATION_CREDENTIALS}
+functions:
+  slack:
+    handler: app.handler
+    events:
+      - http:
+          path: slack/install
+          method: get
+      - http:
+          path: oauth/callback
+          method: get
+      - http:
+          path: slack/events
+          method: post
+plugins:
+  - serverless-offline
