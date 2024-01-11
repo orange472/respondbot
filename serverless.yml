@@ -6,10 +6,12 @@ provider:
   name: aws
   runtime: nodejs14.x
   environment:
+    API_URL: !Sub "https://${ApiGatewayRestApi}.execute-api.${aws:region}.amazonaws.com/${sls:stage}"
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
     SLACK_CLIENT_ID: ${env:SLACK_CLIENT_ID}
     SLACK_CLIENT_SECRET: ${env:SLACK_CLIENT_SECRET}
-    SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
+    STATE_SECRET: ${env:STATE_SECRET}
+    FIREBASE_URL: ${env:FIREBASE_URL}
     GOOGLE_APPLICATION_CREDENTIALS: ${env:GOOGLE_APPLICATION_CREDENTIALS}
 functions:
   slack:

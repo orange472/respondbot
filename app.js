@@ -8,7 +8,7 @@ const serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 const serviceAccount = require(serviceAccountPath);
 initializeApp({
   credential: cert(serviceAccount),
-  databaseURL: "https://respondbot-4406f-default-rtdb.firebaseio.com",
+  databaseURL: process.env.FIREBASE_URL,
 });
 const db = getFirestore();
 db.settings({ ignoreUndefinedProperties: true });
@@ -85,7 +85,7 @@ const expressReceiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
-  stateSecret: "MONB1rbrVTqnOMDiKwQkNmOs3tDHCu1q",
+  stateSecret: process.env.STATE_SECRET,
   scopes: [
     "channels:history",
     "channels:read",
@@ -96,8 +96,7 @@ const expressReceiver = new ExpressReceiver({
     "chat:write",
   ],
   installationStore: new FirebaseInstallationStore(),
-  redirectUri:
-    "https://k5yov2sr42.execute-api.us-east-1.amazonaws.com/dev/oauth/callback",
+  redirectUri: process.env.API_URL + "/oauth/callback",
   installerOptions: { redirectUriPath: "/oauth/callback" },
 });
 
